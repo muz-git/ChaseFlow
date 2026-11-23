@@ -35,7 +35,7 @@ async function DashboardOverview() {
 
   const allRequests = requests ?? []
   const activeRequests = allRequests.filter(
-    (r) => r.status === 'pending' || r.status === 'in_progress'
+    (r) => r.status === 'sent' || r.status === 'in_progress'
   ).length
   const completedRequests = allRequests.filter(
     (r) => r.status === 'completed'

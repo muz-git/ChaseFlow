@@ -55,6 +55,12 @@ async function Navbar() {
             >
               Clients
             </Link>
+            <Link
+              href="/dashboard/requests"
+              className="text-slate-600 hover:text-slate-900 transition-colors"
+            >
+              Requests
+            </Link>
           </nav>
         </div>
 
