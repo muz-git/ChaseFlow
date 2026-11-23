@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { connection } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
@@ -58,6 +59,7 @@ async function RequestsContent() {
                 <th className="py-3 px-4">Progress</th>
                 <th className="py-3 px-4">Due Date</th>
                 <th className="py-3 px-4">Status</th>
+                <th className="py-3 px-4 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 text-sm">
@@ -75,7 +77,14 @@ async function RequestsContent() {
                     <td className="py-3.5 px-4 font-medium text-slate-900">
                       {client?.name || 'Unknown'}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-700">{req.title}</td>
+                    <td className="py-3.5 px-4">
+                      <Link
+                        href={`/dashboard/requests/${req.id}`}
+                        className="font-medium text-slate-900 underline decoration-slate-300 hover:decoration-slate-900"
+                      >
+                        {req.title}
+                      </Link>
+                    </td>
                     <td className="py-3.5 px-4 text-slate-600">
                       {completedCount} / {items.length} items
                     </td>
@@ -92,6 +101,14 @@ async function RequestsContent() {
                       <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800 border border-amber-200 capitalize">
                         {req.status.replace('_', ' ')}
                       </span>
+                    </td>
+                    <td className="py-3.5 px-4 text-right">
+                      <Link
+                        href={`/dashboard/requests/${req.id}`}
+                        className="text-xs font-semibold text-slate-900 hover:underline"
+                      >
+                        Review →
+                      </Link>
                     </td>
                   </tr>
                 )
