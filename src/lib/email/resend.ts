@@ -37,10 +37,30 @@ export async function sendDocumentRequestEmail({
     .map((item) => `<li style="margin-bottom:6px;color:#334155;">${item}</li>`)
     .join('')
 
+  const itemsText = items.map((item) => `- ${item}`).join('\n')
+
+  const textBody = [
+    `${firmName}: ${requestTitle}`,
+    '',
+    `Hi ${clientName},`,
+    '',
+    `${firmName} has requested the following documents from you${
+      formattedDue ? ` by ${formattedDue}` : ''
+    }:`,
+    '',
+    itemsText,
+    '',
+    `Upload Documents Securely (no account or password required):`,
+    portalUrl,
+    '',
+    `Sent securely via FetchDocs on behalf of ${firmName}`,
+  ].join('\n')
+
   const { data, error } = await resend.emails.send({
     from: fromAddress,
     to,
     subject: `${firmName}: Documents requested (${requestTitle})`,
+    text: textBody,
     html: `
       <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px;border:1px solid #e2e8f0;border-radius:12px;">
         <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#059669;margin:0 0 8px;">
@@ -117,14 +137,34 @@ export async function sendReminderEmail({
     .map((item) => `<li style="margin-bottom:6px;color:#334155;">${item}</li>`)
     .join('')
 
+  const itemsText = remainingItems.map((item) => `- ${item}`).join('\n')
+
+  const textBody = [
+    `Document Reminder - ${firmName}: ${requestTitle}`,
+    '',
+    `Hi ${clientName},`,
+    '',
+    `Just a quick reminder that we are still waiting on ${remainingItems.length} outstanding item${
+      remainingItems.length === 1 ? '' : 's'
+    }${formattedDue ? ` ahead of your ${formattedDue} due date` : ''}:`,
+    '',
+    itemsText,
+    '',
+    `Upload Remaining Documents (no login required):`,
+    portalUrl,
+    '',
+    `Sent securely via FetchDocs on behalf of ${firmName}`,
+  ].join('\n')
+
   const { data, error } = await resend.emails.send({
     from: fromAddress,
     to,
     subject: `Reminder: Outstanding documents for ${requestTitle} (${firmName})`,
+    text: textBody,
     html: `
       <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px;border:1px solid #e2e8f0;border-radius:12px;">
         <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#b45309;margin:0 0 8px;">
-          Document Reminder &bull; ${firmName}
+          Document Reminder • ${firmName}
         </p>
         <h1 style="font-size:20px;color:#0f172a;margin:0 0 16px;">
           ${requestTitle}
