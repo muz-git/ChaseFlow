@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'ChaseFlow — Automated Client Document Collection for Accountants',
+  title: 'fetchdocs — Automated Client Document Collection for Accountants',
   description:
     'Collect bank statements, P60s, and tax records through password-free magic links with automated weekday follow-ups.',
 };

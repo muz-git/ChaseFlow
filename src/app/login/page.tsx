@@ -32,7 +32,7 @@ export default function LoginPage() {
 
       <div className="mx-auto my-auto w-full max-w-md py-8">
         <div className="mb-8 flex flex-col items-center text-center">
-          <Link href="/" aria-label="ChaseFlow Home">
+          <Link href="/" aria-label="fetchdocs Home">
             <Logo size="lg" />
           </Link>
           <h1 className="mt-6 text-2xl font-extrabold tracking-tight text-slate-900">
@@ -91,7 +91,7 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-6 border-t border-slate-100 pt-5 text-center text-sm text-slate-600">
-            New to ChaseFlow?{' '}
+            New to fetchdocs?{' '}
             <Link
               href="/signup"
               className="font-semibold text-emerald-700 transition hover:text-emerald-800 hover:underline"

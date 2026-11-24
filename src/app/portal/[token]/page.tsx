@@ -46,7 +46,7 @@ async function PortalContent({
           </p>
         </div>
         <p className="text-center text-xs text-slate-400">
-          Powered by ChaseFlow Secure Document Collection
+          Powered by fetchdocs Secure Document Collection
         </p>
       </div>
     )
@@ -74,7 +74,7 @@ async function PortalContent({
           </p>
         </div>
         <p className="text-center text-xs text-slate-400">
-          Powered by ChaseFlow Secure Document Collection
+          Powered by fetchdocs Secure Document Collection
         </p>
       </div>
     )
@@ -181,7 +181,7 @@ async function PortalContent({
             href="/"
             className="font-medium text-slate-500 transition hover:text-slate-800"
           >
-            Powered by ChaseFlow
+            Powered by fetchdocs
           </Link>
         </div>
       </footer>

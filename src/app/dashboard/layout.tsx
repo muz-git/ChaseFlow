@@ -33,7 +33,7 @@ async function Navbar() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
-            <Link href="/dashboard" aria-label="ChaseFlow Dashboard">
+            <Link href="/dashboard" aria-label="fetchdocs Dashboard">
               <Logo size="sm" />
             </Link>
             {org && (

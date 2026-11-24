@@ -32,7 +32,7 @@ export default function SignupPage() {
 
       <div className="mx-auto my-auto w-full max-w-md py-8">
         <div className="mb-8 flex flex-col items-center text-center">
-          <Link href="/" aria-label="ChaseFlow Home">
+          <Link href="/" aria-label="fetchdocs Home">
             <Logo size="lg" />
           </Link>
           <h1 className="mt-6 text-2xl font-extrabold tracking-tight text-slate-900">

@@ -10,7 +10,7 @@ const features = [
   {
     title: 'Automated Weekday Chasing',
     description:
-      'Set a due date once. ChaseFlow politely follows up at 9:00 AM on weekdays until every requested bank statement, P60, or receipt is uploaded.',
+      'Set a due date once. fetchdocs politely follows up at 9:00 AM on weekdays until every requested bank statement, P60, or receipt is uploaded.',
   },
   {
     title: 'Instant Review & Audit Trail',
@@ -56,7 +56,7 @@ export default function LandingPage() {
       {/* Top Navigation */}
       <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/" aria-label="ChaseFlow Home">
+          <Link href="/" aria-label="fetchdocs Home">
             <Logo size="md" />
           </Link>
 
@@ -105,7 +105,7 @@ export default function LandingPage() {
 
             <p className="mt-6 text-lg leading-8 text-slate-600">
               Send branded document checklists in 30 seconds. Clients upload bank statements,
-              receipts, and P60s through a password-free magic link while ChaseFlow handles the
+              receipts, and P60s through a password-free magic link while fetchdocs handles the
               follow-up emails automatically.
             </p>
 
@@ -135,7 +135,7 @@ export default function LandingPage() {
               <span className="h-3 w-3 rounded-full bg-amber-400/80" />
               <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
               <span className="ml-3 text-xs font-medium text-slate-400">
-                chaseflow.co.uk/dashboard/requests/sa-2026
+                fetchdocs.co.uk/dashboard/requests/sa-2026
               </span>
             </div>
 
@@ -359,7 +359,7 @@ export default function LandingPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
           <Logo size="sm" />
           <p className="text-xs text-slate-500">
-            © 2026 ChaseFlow. Secure Client Document Collection for Accounting Practices.
+            © 2026 fetchdocs. Secure Client Document Collection for Accounting Practices.
           </p>
           <div className="flex gap-6 text-xs font-medium text-slate-600">
             <Link href="/login" className="hover:text-slate-900">

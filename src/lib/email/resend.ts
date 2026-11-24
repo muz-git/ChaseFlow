@@ -2,6 +2,8 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder')
 
+const DEFAULT_FROM_ADDRESS = 'FetchDocs <requests@fetchdocs.co.uk>'
+
 interface SendRequestEmailParams {
   to: string
   clientName: string
@@ -21,8 +23,7 @@ export async function sendDocumentRequestEmail({
   portalUrl,
   items,
 }: SendRequestEmailParams) {
-  const fromAddress =
-    process.env.RESEND_FROM_EMAIL || 'ChaseFlow <onboarding@resend.dev>'
+  const fromAddress = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_ADDRESS
 
   const formattedDue = dueDate
     ? new Date(dueDate).toLocaleDateString('en-GB', {
@@ -42,7 +43,7 @@ export async function sendDocumentRequestEmail({
     subject: `${firmName}: Documents requested (${requestTitle})`,
     html: `
       <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px;border:1px solid #e2e8f0;border-radius:12px;">
-        <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin:0 0 8px;">
+        <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#059669;margin:0 0 8px;">
           ${firmName}
         </p>
         <h1 style="font-size:20px;color:#0f172a;margin:0 0 16px;">
@@ -68,6 +69,10 @@ export async function sendDocumentRequestEmail({
           No account or password is required. If the button doesn't work, copy and paste this link into your browser:<br/>
           <span style="color:#0f172a;word-break:break-all;">${portalUrl}</span>
         </p>
+        <hr style="border:none;border-top:1px solid #f1f5f9;margin:20px 0 12px;" />
+        <p style="font-size:11px;color:#94a3b8;margin:0;">
+          Sent securely via FetchDocs on behalf of ${firmName}
+        </p>
       </div>
     `,
   })
@@ -78,6 +83,7 @@ export async function sendDocumentRequestEmail({
 
   return { messageId: data?.id ?? null }
 }
+
 interface SendReminderEmailParams {
   to: string
   clientName: string
@@ -97,8 +103,7 @@ export async function sendReminderEmail({
   portalUrl,
   remainingItems,
 }: SendReminderEmailParams) {
-  const fromAddress =
-    process.env.RESEND_FROM_EMAIL || 'ChaseFlow <onboarding@resend.dev>'
+  const fromAddress = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_ADDRESS
 
   const formattedDue = dueDate
     ? new Date(dueDate).toLocaleDateString('en-GB', {
@@ -119,7 +124,7 @@ export async function sendReminderEmail({
     html: `
       <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px;border:1px solid #e2e8f0;border-radius:12px;">
         <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#b45309;margin:0 0 8px;">
-          Document Reminder • ${firmName}
+          Document Reminder &bull; ${firmName}
         </p>
         <h1 style="font-size:20px;color:#0f172a;margin:0 0 16px;">
           ${requestTitle}
@@ -143,6 +148,10 @@ export async function sendReminderEmail({
         <p style="font-size:12px;color:#64748b;line-height:1.5;">
           No login required. Direct link:<br/>
           <span style="color:#0f172a;word-break:break-all;">${portalUrl}</span>
+        </p>
+        <hr style="border:none;border-top:1px solid #f1f5f9;margin:20px 0 12px;" />
+        <p style="font-size:11px;color:#94a3b8;margin:0;">
+          Sent securely via FetchDocs on behalf of ${firmName}
         </p>
       </div>
     `,

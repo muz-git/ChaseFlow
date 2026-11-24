@@ -25,10 +25,8 @@ export function Logo({ size = 'md', lightText = false }: LogoProps) {
           strokeLinejoin="round"
           aria-hidden="true"
         >
-          {/* Document outline */}
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
           <polyline points="14 2 14 8 20 8" />
-          {/* Checkmark flow */}
           <path d="m9 14.5 2 2 4-4" className="text-emerald-400" stroke="currentColor" />
         </svg>
       </div>
@@ -37,7 +35,7 @@ export function Logo({ size = 'md', lightText = false }: LogoProps) {
           lightText ? 'text-white' : 'text-slate-900'
         }`}
       >
-        Chase<span className="text-emerald-600">Flow</span>
+        Fetch<span className="text-emerald-600">Docs</span>
       </span>
     </div>
   )
