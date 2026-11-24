@@ -163,4 +163,7 @@ async function PortalContent({
           </p>
 
           {request.description && (
-            <div className="mt-5 rounded-xl border border-slate-200/80 bg-slate-50/80 p-4 text-sm leading-relaxed text-slate-7
+            <div className="mt-5 rounded-xl border border-slate-200/80 bg-slate-50/80 p-4 text-sm leading-relaxed text-slate-700">
+              {request.description}
+            </div>
+          )}
