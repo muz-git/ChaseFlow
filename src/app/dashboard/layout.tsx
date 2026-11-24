@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { connection } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { logout } from '@/app/auth/actions'
+import { Logo } from '@/components/Logo'
 
 async function Navbar() {
   await connection()
@@ -28,54 +29,79 @@ async function Navbar() {
     : membership?.organizations
 
   return (
-    <header className="bg-white border-b border-slate-200">
-      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-30 border-b border-slate-200/90 bg-white/95 backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
-            <Link href="/dashboard" className="font-bold text-lg text-slate-900">
-              ChaseFlow
+            <Link href="/dashboard" aria-label="ChaseFlow Dashboard">
+              <Logo size="sm" />
             </Link>
             {org && (
-              <span className="text-xs font-medium bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
                 {org.name}
               </span>
             )}
           </div>
 
-          <nav className="flex items-center gap-4 text-sm font-medium">
+          <nav className="hidden items-center gap-1 sm:flex">
             <Link
               href="/dashboard"
-              className="text-slate-600 hover:text-slate-900 transition-colors"
+              className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Overview
             </Link>
             <Link
               href="/dashboard/clients"
-              className="text-slate-600 hover:text-slate-900 transition-colors"
+              className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Clients
             </Link>
             <Link
               href="/dashboard/requests"
-              className="text-slate-600 hover:text-slate-900 transition-colors"
+              className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Requests
             </Link>
           </nav>
         </div>
 
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-slate-600 hidden sm:inline">{user.email}</span>
+        <div className="flex items-center gap-3">
+          <span className="hidden text-xs font-medium text-slate-500 md:inline">
+            {user.email}
+          </span>
           <form action={logout}>
             <button
               type="submit"
-              className="text-sm font-medium text-slate-700 hover:text-slate-900 border border-slate-300 rounded-lg px-3 py-1.5"
+              className="rounded-xl border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-xs transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
             >
               Sign out
             </button>
           </form>
         </div>
       </div>
+
+      {/* Mobile navigation bar */}
+      <nav className="flex items-center gap-1 border-t border-slate-100 px-4 py-2 sm:hidden">
+        <Link
+          href="/dashboard"
+          className="rounded-lg px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+        >
+          Overview
+        </Link>
+        <Link
+          href="/dashboard/clients"
+          className="rounded-lg px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+        >
+          Clients
+        </Link>
+        <Link
+          href="/dashboard/requests"
+          className="rounded-lg px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+        >
+          Requests
+        </Link>
+      </nav>
     </header>
   )
 }
@@ -86,15 +112,15 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 selection:bg-emerald-100 selection:text-emerald-900">
       <Suspense
         fallback={
-          <header className="bg-white border-b border-slate-200 h-16" />
+          <header className="h-16 border-b border-slate-200 bg-white" />
         }
       >
         <Navbar />
       </Suspense>
-      <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">{children}</main>
     </div>
   )
 }

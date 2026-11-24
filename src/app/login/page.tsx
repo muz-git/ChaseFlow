@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { login } from '@/app/auth/actions'
+import { Logo } from '@/components/Logo'
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
@@ -19,66 +20,91 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-slate-900">Sign in to ChaseFlow</h1>
-          <p className="text-sm text-slate-600 mt-1">
-            Enter your credentials to access your firm dashboard.
+    <main className="min-h-screen flex flex-col justify-between bg-slate-50 px-4 py-8 selection:bg-emerald-100 selection:text-emerald-900">
+      <div className="mx-auto w-full max-w-md">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 transition hover:text-slate-900"
+        >
+          ← Back to home
+        </Link>
+      </div>
+
+      <div className="mx-auto my-auto w-full max-w-md py-8">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <Link href="/" aria-label="ChaseFlow Home">
+            <Logo size="lg" />
+          </Link>
+          <h1 className="mt-6 text-2xl font-extrabold tracking-tight text-slate-900">
+            Welcome back
+          </h1>
+          <p className="mt-1.5 text-sm text-slate-600">
+            Sign in to your practice workspace to manage client requests.
           </p>
         </div>
 
-        <form action={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-slate-700">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="you@firm.co.uk"
-              className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-slate-900 focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-slate-700">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              placeholder="••••••••"
-              className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 focus:border-slate-900 focus:outline-none"
-            />
-          </div>
-
-          {error && (
-            <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
-              {error}
+        <div className="rounded-2xl border border-slate-200/90 bg-white p-8 shadow-sm">
+          <form action={handleSubmit} className="space-y-5">
+            <div>
+              <label htmlFor="email" className="block text-sm font-semibold text-slate-700">
+                Work Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                placeholder="you@firm.co.uk"
+                className="mt-1.5 block w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+              />
             </div>
-          )}
 
-          <button
-            type="submit"
-            disabled={pending}
-            className="w-full rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
-          >
-            {pending ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
+            <div>
+              <label htmlFor="password" className="block text-sm font-semibold text-slate-700">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                placeholder="Enter your password"
+                className="mt-1.5 block w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
+              />
+            </div>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
-          Need a workspace for your firm?{' '}
-          <Link href="/signup" className="font-semibold text-slate-900 hover:underline">
-            Register your firm
-          </Link>
-        </p>
+            {error && (
+              <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={pending}
+              className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {pending ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
+
+          <p className="mt-6 border-t border-slate-100 pt-5 text-center text-sm text-slate-600">
+            New to ChaseFlow?{' '}
+            <Link
+              href="/signup"
+              className="font-semibold text-emerald-700 transition hover:text-emerald-800 hover:underline"
+            >
+              Start your 14-day free trial
+            </Link>
+          </p>
+        </div>
       </div>
+
+      <p className="text-center text-xs text-slate-500">
+        UK & EU encrypted client document collection
+      </p>
     </main>
   )
 }
