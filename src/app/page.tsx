@@ -5,7 +5,7 @@ const features = [
   {
     title: 'Zero-Password Magic Portals',
     description:
-      'Clients click a secure, encrypted link straight from their inboxâ€”no forgotten passwords, portal registrations, or phone support.',
+      'Clients click a secure, encrypted link straight from their inbox - no forgotten passwords, portal registrations, or phone support.',
   },
   {
     title: 'Automated Weekday Chasing',
@@ -22,7 +22,7 @@ const features = [
 const tiers = [
   {
     name: 'Solo Practitioner',
-    price: 'Â£29',
+    price: '£29',
     period: '/month',
     description: 'Ideal for independent bookkeepers and sole-practitioner accountants.',
     highlights: [
@@ -36,7 +36,7 @@ const tiers = [
   },
   {
     name: 'Practice Growth',
-    price: 'Â£69',
+    price: '£69',
     period: '/month',
     description: 'Built for growing UK accounting practices tired of year-end bottlenecks.',
     highlights: [
@@ -105,7 +105,7 @@ export default function LandingPage() {
 
             <p className="mt-6 text-lg leading-8 text-slate-600">
               Send branded document checklists in 30 seconds. Clients upload bank statements,
-              receipts, and P60s through a password-free magic linkâ€”while ChaseFlow handles the
+              receipts, and P60s through a password-free magic link while ChaseFlow handles the
               follow-up emails automatically.
             </p>
 
@@ -120,11 +120,11 @@ export default function LandingPage() {
                 href="/login"
                 className="w-full rounded-xl border border-slate-300 bg-white px-7 py-3.5 text-base font-semibold text-slate-800 transition hover:bg-slate-50 sm:w-auto"
               >
-                Accountant Sign In â†’
+                Accountant Sign In →
               </Link>
             </div>
             <p className="mt-4 text-xs text-slate-500">
-              No credit card required Â· UK & EU encrypted storage Â· Setup in under 2 minutes
+              No credit card required · UK & EU encrypted storage · Setup in under 2 minutes
             </p>
           </div>
 
@@ -143,10 +143,10 @@ export default function LandingPage() {
               <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">
-                    Active Checklist Â· Auto-Chase Enabled
+                    Active Checklist · Auto-Chase Enabled
                   </p>
                   <h2 className="mt-1 text-xl font-bold text-slate-900">
-                    2025/26 Self-Assessment Pack â€” Hartwell Design Ltd
+                    2025/26 Self-Assessment Pack - Hartwell Design Ltd
                   </h2>
                 </div>
                 <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
@@ -160,10 +160,12 @@ export default function LandingPage() {
                     <p className="text-sm font-semibold text-slate-900">
                       12 Months Business Bank Statements (PDF/CSV)
                     </p>
-                    <p className="text-xs text-slate-500">Uploaded by client Â· Barclays_2025_26.pdf</p>
+                    <p className="text-xs text-slate-500">
+                      Uploaded by client · Barclays_2025_26.pdf
+                    </p>
                   </div>
                   <span className="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                    âœ“ Approved
+                    Approved
                   </span>
                 </div>
 
@@ -172,7 +174,9 @@ export default function LandingPage() {
                     <p className="text-sm font-semibold text-slate-900">
                       P60 End of Year Certificate
                     </p>
-                    <p className="text-xs text-slate-500">Uploaded 14 mins ago Â· Ready for review</p>
+                    <p className="text-xs text-slate-500">
+                      Uploaded 14 mins ago · Ready for review
+                    </p>
                   </div>
                   <span className="rounded-md bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-700">
                     Review File
@@ -184,7 +188,9 @@ export default function LandingPage() {
                     <p className="text-sm font-semibold text-slate-900">
                       Dividend Vouchers & Summary
                     </p>
-                    <p className="text-xs text-slate-500">Next polite reminder scheduled: Tomorrow 9:00 AM</p>
+                    <p className="text-xs text-slate-500">
+                      Next polite reminder scheduled: Tomorrow 9:00 AM
+                    </p>
                   </div>
                   <span className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
                     Awaiting Client
@@ -218,7 +224,7 @@ export default function LandingPage() {
               {
                 step: '02',
                 title: 'Client Uploads via Magic Link',
-                body: 'Your client receives a one-click upload portalâ€”works cleanly on phone or desktop with zero login friction.',
+                body: 'Your client receives a one-click upload portal that works cleanly on phone or desktop with zero login friction.',
               },
               {
                 step: '03',
@@ -256,8 +262,14 @@ export default function LandingPage() {
                 key={feature.title}
                 className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-7"
               >
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600/10 text-emerald-700 font-bold">
-                  âœ“
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600/10 text-emerald-700">
+                  <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path
+                      fillRule="evenodd"
+                      d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">{feature.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-slate-600">{feature.description}</p>
@@ -319,7 +331,7 @@ export default function LandingPage() {
                   <ul className="mt-8 space-y-3 text-sm">
                     {tier.highlights.map((item) => (
                       <li key={item} className="flex items-center gap-2.5">
-                        <span className="font-bold text-emerald-500">âœ“</span>
+                        <span className="font-bold text-emerald-500">+</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -347,7 +359,7 @@ export default function LandingPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
           <Logo size="sm" />
           <p className="text-xs text-slate-500">
-            Â© 2026 ChaseFlow. Secure Client Document Collection for Accounting Practices.
+            © 2026 ChaseFlow. Secure Client Document Collection for Accounting Practices.
           </p>
           <div className="flex gap-6 text-xs font-medium text-slate-600">
             <Link href="/login" className="hover:text-slate-900">
