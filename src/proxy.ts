@@ -33,11 +33,25 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  const { pathname } = request.nextUrl
+
   // Protect /dashboard routes if not logged in
-  if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
+  if (!user && pathname.startsWith('/dashboard')) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
+  }
+
+  // Send already-authenticated users straight to /dashboard from /login or /signup
+  if (user && (pathname === '/login' || pathname === '/signup')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/dashboard'
+    return NextResponse.redirect(url)
+  }
+
+  // Prevent browsers from caching stale redirects on the public landing page
+  if (pathname === '/') {
+    supabaseResponse.headers.set('Cache-Control', 'no-store, max-age=0')
   }
 
   return supabaseResponse
