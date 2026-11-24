@@ -66,7 +66,7 @@ export async function createDocumentRequest(input: {
     .single()
 
   if (clientError || !client) {
-    return { error: 'Client not found' }
+    return { error: clientError ? `Client lookup failed: ${clientError.message}` : 'Client not found' }
   }
 
   // Generate raw magic token + SHA-256 hash for DB storage
