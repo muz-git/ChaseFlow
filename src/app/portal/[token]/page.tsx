@@ -114,7 +114,6 @@ async function PortalContent({
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-emerald-100 selection:text-emerald-900">
-      {/* Top security & branding header */}
       <header className="border-b border-slate-200/90 bg-white">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
@@ -167,3 +166,43 @@ async function PortalContent({
               {request.description}
             </div>
           )}
+        </div>
+
+        <PortalChecklist rawToken={token} items={sortedItems} />
+      </main>
+
+      <footer className="border-t border-slate-200/70 bg-white py-5">
+        <div className="mx-auto flex max-w-3xl flex-col items-center justify-between gap-2 px-4 text-xs text-slate-500 sm:flex-row sm:px-6">
+          <span className="inline-flex items-center gap-1.5">
+            <Lock className="h-3.5 w-3.5 text-emerald-600" />
+            Files are encrypted in transit and at rest in UK/EU data centres.
+          </span>
+          <Link
+            href="/"
+            className="font-medium text-slate-500 transition hover:text-slate-800"
+          >
+            Powered by ChaseFlow
+          </Link>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
+export default function ClientPortalPage({
+  params,
+}: {
+  params: Promise<{ token: string }>
+}) {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-slate-50 text-sm text-slate-600">
+          Loading secure document checklist...
+        </div>
+      }
+    >
+      <PortalContent paramsPromise={params} />
+    </Suspense>
+  )
+}
