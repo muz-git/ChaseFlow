@@ -5,13 +5,13 @@ interface LogoProps {
 
 export function Logo({ size = 'md', lightText = false }: LogoProps) {
   const dimensions = {
-    sm: { box: 'h-8 w-8', text: 'text-lg' },
-    md: { box: 'h-10 w-10', text: 'text-xl' },
-    lg: { box: 'h-12 w-12', text: 'text-2xl' },
+    sm: { box: 'h-10 w-10', text: 'text-xl' },
+    md: { box: 'h-14 w-14', text: 'text-2xl' },
+    lg: { box: 'h-16 w-16', text: 'text-3xl' },
   }[size]
 
   return (
-    <div className="inline-flex items-center gap-2.5 select-none">
+    <div className="inline-flex items-center gap-3 select-none">
       <div
         className={`${dimensions.box} relative shrink-0 overflow-hidden rounded-full bg-white shadow-sm ring-1 ring-slate-900/10`}
       >

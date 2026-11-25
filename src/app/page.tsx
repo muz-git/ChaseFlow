@@ -10,7 +10,7 @@ const features = [
   {
     title: 'Automated Weekday Chasing',
     description:
-      'Set a due date once. fetchdocs politely follows up at 9:00 AM on weekdays until every requested bank statement, P60, or receipt is uploaded.',
+      'Set a due date once. FetchDocs politely follows up at 9:00 AM on weekdays until every requested bank statement, P60, or receipt is uploaded.',
   },
   {
     title: 'Instant Review & Audit Trail',
@@ -21,32 +21,49 @@ const features = [
 
 const tiers = [
   {
-    name: 'Solo Practitioner',
-    price: '£29',
+    name: 'Starter',
+    price: '£9.99',
     period: '/month',
-    description: 'Ideal for independent bookkeepers and sole-practitioner accountants.',
+    description: 'Ideal for sole bookkeepers and independent practitioners starting out.',
     highlights: [
-      'Up to 50 active client portals',
-      'Automated weekday email reminders',
-      '15 MB per-file secure uploads',
-      'Full document audit trail',
+      'Up to 10 active document requests/mo',
+      '10 GB encrypted UK/EU client storage',
+      'No-login magic link client portals',
+      'UK Self-Assessment & VAT templates',
+      'Manual 1-click email nudges',
     ],
     cta: 'Start 14-Day Free Trial',
     featured: false,
   },
   {
-    name: 'Practice Growth',
-    price: '£69',
+    name: 'Practice',
+    price: '£19.99',
     period: '/month',
-    description: 'Built for growing UK accounting practices tired of year-end bottlenecks.',
+    description: 'Built for growing small firms tired of year-end chasing bottlenecks.',
     highlights: [
-      'Unlimited client portals & requests',
+      'Up to 50 active document requests/mo',
+      '50 GB encrypted UK/EU client storage',
+      'Automated weekday reminder schedules',
       'Custom firm logo & portal branding',
-      'Priority email delivery & read logs',
-      'Reusable Self-Assessment & VAT templates',
+      'Full document review & audit trail',
     ],
     cta: 'Start 14-Day Free Trial',
     featured: true,
+  },
+  {
+    name: 'Firm',
+    price: '£39.99',
+    period: '/month',
+    description: 'Complete document collection workflow for multi-staff practices.',
+    highlights: [
+      'Unlimited active document requests',
+      '250 GB encrypted UK/EU client storage',
+      'Up to 5 staff team logins',
+      '1-click ZIP pack export per client',
+      'Priority email delivery & support',
+    ],
+    cta: 'Start 14-Day Free Trial',
+    featured: false,
   },
 ]
 
@@ -55,8 +72,8 @@ export default function LandingPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-emerald-100 selection:text-emerald-900">
       {/* Top Navigation */}
       <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/" aria-label="fetchdocs Home">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+          <Link href="/" aria-label="FetchDocs Home">
             <Logo size="md" />
           </Link>
 
@@ -105,7 +122,7 @@ export default function LandingPage() {
 
             <p className="mt-6 text-lg leading-8 text-slate-600">
               Send branded document checklists in 30 seconds. Clients upload bank statements,
-              receipts, and P60s through a password-free magic link while fetchdocs handles the
+              receipts, and P60s through a password-free magic link while FetchDocs handles the
               follow-up emails automatically.
             </p>
 
@@ -281,7 +298,7 @@ export default function LandingPage() {
 
       {/* Pricing */}
       <section id="pricing" className="py-20">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-slate-900">
               Simple, transparent practice pricing
@@ -291,7 +308,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-8 md:grid-cols-2">
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
             {tiers.map((tier) => (
               <div
                 key={tier.name}
@@ -302,10 +319,10 @@ export default function LandingPage() {
                 }`}
               >
                 <div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-2">
                     <h3 className="text-xl font-bold">{tier.name}</h3>
                     {tier.featured && (
-                      <span className="rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-semibold text-emerald-300">
+                      <span className="shrink-0 rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-semibold text-emerald-300">
                         Most Popular
                       </span>
                     )}
@@ -330,7 +347,7 @@ export default function LandingPage() {
 
                   <ul className="mt-8 space-y-3 text-sm">
                     {tier.highlights.map((item) => (
-                      <li key={item} className="flex items-center gap-2.5">
+                      <li key={item} className="flex items-start gap-2.5">
                         <span className="font-bold text-emerald-500">+</span>
                         <span>{item}</span>
                       </li>
@@ -359,7 +376,7 @@ export default function LandingPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
           <Logo size="sm" />
           <p className="text-xs text-slate-500">
-            © 2026 fetchdocs. Secure Client Document Collection for Accounting Practices.
+            © 2026 FetchDocs. Secure Client Document Collection for Accounting Practices.
           </p>
           <div className="flex gap-6 text-xs font-medium text-slate-600">
             <Link href="/login" className="hover:text-slate-900">
