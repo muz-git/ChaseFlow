@@ -13,9 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'fetchdocs — Automated Client Document Collection for Accountants',
+  title: 'FetchDocs – Automated Client Document Collection for Accountants',
   description:
-    'Collect bank statements, P60s, and tax records through password-free magic links with automated weekday follow-ups.',
+    'Collect bank statements, P60s, and tax records through password-free magic links.',
+  icons: {
+    icon: '/logo-collie.png?v=2',
+    apple: '/logo-collie.png?v=2',
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
