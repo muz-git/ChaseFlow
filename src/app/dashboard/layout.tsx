@@ -69,6 +69,12 @@ async function Navbar() {
             >
               Branding
             </Link>
+            <Link
+              href="/dashboard/billing"
+              className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+            >
+              Billing
+            </Link>
           </nav>
         </div>
 
@@ -88,7 +94,7 @@ async function Navbar() {
       </div>
 
       {/* Mobile navigation bar */}
-      <nav className="flex items-center gap-1 border-t border-slate-100 px-4 py-2 sm:hidden">
+      <nav className="flex items-center gap-1 overflow-x-auto border-t border-slate-100 px-4 py-2 sm:hidden">
         <Link
           href="/dashboard"
           className="rounded-lg px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
@@ -112,6 +118,12 @@ async function Navbar() {
           className="rounded-lg px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
         >
           Branding
+        </Link>
+        <Link
+          href="/dashboard/billing"
+          className="rounded-lg px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+        >
+          Billing
         </Link>
       </nav>
     </header>

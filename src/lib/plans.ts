@@ -62,3 +62,21 @@ export function getPlanConfig(plan?: string | null): PlanConfig {
   }
   return PLANS.starter
 }
+
+export function getStripePriceId(plan: PlanId): string | undefined {
+  switch (plan) {
+    case 'starter':
+      return process.env.STRIPE_PRICE_STARTER
+    case 'practice':
+      return process.env.STRIPE_PRICE_PRACTICE
+    case 'firm':
+      return process.env.STRIPE_PRICE_FIRM
+  }
+}
+
+export function getPlanFromPriceId(priceId?: string | null): PlanId {
+  if (!priceId) return 'starter'
+  if (priceId === process.env.STRIPE_PRICE_FIRM) return 'firm'
+  if (priceId === process.env.STRIPE_PRICE_PRACTICE) return 'practice'
+  return 'starter'
+}
