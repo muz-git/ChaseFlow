@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { sendDocumentRequestEmail } from '@/lib/email/resend'
+import { getPlanConfig } from '@/lib/plans'
 
 const createRequestSchema = z.object({
   clientId: z.string().uuid('Please select a valid client'),
@@ -43,10 +44,10 @@ export async function createDocumentRequest(input: {
     return { error: 'Not authenticated' }
   }
 
-  // Get firm details
+  // Get firm details including current subscription tier
   const { data: membership, error: memberError } = await supabase
     .from('organization_members')
-    .select('organization_id, organizations(name)')
+    .select('organization_id, organizations(name, plan)')
     .eq('user_id', user.id)
     .single()
 
@@ -57,6 +58,36 @@ export async function createDocumentRequest(input: {
   const org = Array.isArray(membership.organizations)
     ? membership.organizations[0]
     : membership.organizations
+
+  // Enforce monthly request cap for Starter (10) & Practice (50)
+  const planConfig = getPlanConfig(org?.plan)
+
+  if (planConfig.monthlyRequestLimit !== null) {
+    const startOfMonth = new Date()
+    startOfMonth.setUTCDate(1)
+    startOfMonth.setUTCHours(0, 0, 0, 0)
+
+    const { count, error: countError } = await supabase
+      .from('document_requests')
+      .select('id', { count: 'exact', head: true })
+      .eq('organization_id', membership.organization_id)
+      .gte('created_at', startOfMonth.toISOString())
+
+    if (countError) {
+      return { error: `Could not verify plan usage: ${countError.message}` }
+    }
+
+    if ((count ?? 0) >= planConfig.monthlyRequestLimit) {
+      const nextTierHint =
+        planConfig.id === 'starter'
+          ? 'Upgrade to Practice (£19.99/mo for 50 requests) or Firm (£39.99/mo for unlimited).'
+          : 'Upgrade to Firm (£39.99/mo) for unlimited monthly document requests.'
+
+      return {
+        error: `You have reached your ${planConfig.name} plan limit of ${planConfig.monthlyRequestLimit} document requests this month. ${nextTierHint}`,
+      }
+    }
+  }
 
   // Verify client belongs to this firm
   const { data: client, error: clientError } = await supabase

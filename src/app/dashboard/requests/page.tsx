@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { connection } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { getPlanConfig } from '@/lib/plans'
 import { CreateRequestForm } from './CreateRequestForm'
 
 async function RequestsContent() {
@@ -17,7 +18,11 @@ async function RequestsContent() {
     redirect('/login')
   }
 
-  const [{ data: clients }, { data: requests }] = await Promise.all([
+  const startOfMonth = new Date()
+  startOfMonth.setUTCDate(1)
+  startOfMonth.setUTCHours(0, 0, 0, 0)
+
+  const [{ data: clients }, { data: requests }, { data: membership }] = await Promise.all([
     supabase
       .from('clients')
       .select('id, name, email')
@@ -26,15 +31,62 @@ async function RequestsContent() {
       .from('document_requests')
       .select('id, title, status, due_date, created_at, clients(name, email), request_items(id, status)')
       .order('created_at', { ascending: false }),
+    supabase
+      .from('organization_members')
+      .select('organization_id, organizations(plan, trial_ends_at)')
+      .eq('user_id', user.id)
+      .single(),
   ])
+
+  const org = Array.isArray(membership?.organizations)
+    ? membership.organizations[0]
+    : membership?.organizations
+
+  const planConfig = getPlanConfig(org?.plan)
+
+  const monthlyUsed = (requests ?? []).filter(
+    (r) => new Date(r.created_at) >= startOfMonth
+  ).length
+
+  const limit = planConfig.monthlyRequestLimit
+  const usagePercent = limit ? Math.min(100, Math.round((monthlyUsed / limit) * 100)) : 0
+  const isAtLimit = limit !== null && monthlyUsed >= limit
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900">Document Requests</h1>
-        <p className="text-sm text-slate-600 mt-1">
-          Send magic-link document checklists and track upload progress across your clients.
-        </p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">Document Requests</h1>
+          <p className="text-sm text-slate-600 mt-1">
+            Send magic-link document checklists and track upload progress across your clients.
+          </p>
+        </div>
+
+        {/* Plan Usage Pill */}
+        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm sm:min-w-[260px]">
+          <div className="flex items-center justify-between text-xs font-semibold">
+            <span className="text-emerald-700">{planConfig.name} Plan ({planConfig.priceLabel})</span>
+            <span className={isAtLimit ? 'text-rose-600' : 'text-slate-600'}>
+              {limit === null
+                ? `${monthlyUsed} sent this month (Unlimited)`
+                : `${monthlyUsed} / ${limit} this month`}
+            </span>
+          </div>
+          {limit !== null && (
+            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+              <div
+                className={`h-full rounded-full transition-all ${
+                  isAtLimit
+                    ? 'bg-rose-500'
+                    : usagePercent >= 80
+                      ? 'bg-amber-500'
+                      : 'bg-emerald-600'
+                }`}
+                style={{ width: `${usagePercent}%` }}
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       <CreateRequestForm clients={clients ?? []} />
