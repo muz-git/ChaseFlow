@@ -2,9 +2,10 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { connection } from 'next/server'
-import { ArrowLeft, Mail } from 'lucide-react'
+import { ArrowLeft, Mail, FolderArchive, Lock } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getPlanConfig } from '@/lib/plans'
 import { RequestReviewClient } from './RequestReviewClient'
 
 async function RequestDetailContent({
@@ -23,6 +24,19 @@ async function RequestDetailContent({
   if (!user) {
     redirect('/login')
   }
+
+  // Fetch firm plan for ZIP export tier-gating
+  const { data: membership } = await supabase
+    .from('organization_members')
+    .select('organizations(plan)')
+    .eq('user_id', user.id)
+    .single()
+
+  const org = Array.isArray(membership?.organizations)
+    ? membership.organizations[0]
+    : membership?.organizations
+
+  const planConfig = getPlanConfig(org?.plan)
 
   // RLS ensures the user can only fetch requests belonging to their firm
   const { data: request, error } = await supabase
@@ -90,6 +104,8 @@ async function RequestDetailContent({
     documents: docsWithUrls.filter((d) => d.request_item_id === item.id),
   }))
 
+  const totalUploadedCount = docsWithUrls.length
+
   return (
     <div className="space-y-8">
       <div>
@@ -101,7 +117,7 @@ async function RequestDetailContent({
           Back to Requests
         </Link>
 
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-slate-900">{request.title}</h1>
             <p className="text-sm text-slate-600 mt-1">
@@ -109,9 +125,39 @@ async function RequestDetailContent({
             </p>
           </div>
 
-          <span className="inline-flex items-center self-start rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-800 border border-slate-200 capitalize">
-            Status: {request.status.replace('_', ' ')}
-          </span>
+          <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
+            {planConfig.features.zipExport ? (
+              totalUploadedCount > 0 ? (
+                <a
+                  href={`/api/requests/${request.id}/zip`}
+                  className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3.5 py-2 text-xs font-semibold text-white shadow-xs transition hover:bg-slate-800"
+                >
+                  <FolderArchive className="h-4 w-4 text-emerald-400" />
+                  Download All as ZIP ({totalUploadedCount})
+                </a>
+              ) : (
+                <span
+                  title="Available once at least one file is uploaded"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400"
+                >
+                  <FolderArchive className="h-3.5 w-3.5" />
+                  Download ZIP (0 files)
+                </span>
+              )
+            ) : (
+              <span
+                title="Upgrade to the Firm (£39.99/mo) plan to download all client files in a single ZIP archive"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-500"
+              >
+                <Lock className="h-3.5 w-3.5 text-amber-500" />
+                ZIP Export (Firm Plan)
+              </span>
+            )}
+
+            <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 capitalize">
+              Status: {request.status.replace('_', ' ')}
+            </span>
+          </div>
         </div>
       </div>
 
