@@ -2,6 +2,7 @@ import crypto from 'crypto'
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { sendReminderEmail } from '@/lib/email/resend'
+import { getPlanConfig } from '@/lib/plans'
 
 export async function GET(request: Request) {
   const authHeader = request.headers.get('authorization')
@@ -24,9 +25,23 @@ export async function GET(request: Request) {
     .in('status', ['sent', 'in_progress'])
 
   let chasedCount = 0
+  let skippedStarterCount = 0
 
   for (const req of openRequests ?? []) {
     if (req.token_expires_at && new Date(req.token_expires_at) < new Date()) {
+      continue
+    }
+
+    // Check organization tier before doing reminder work
+    const { data: org } = await admin
+      .from('organizations')
+      .select('name, plan')
+      .eq('id', req.organization_id)
+      .single()
+
+    const planConfig = getPlanConfig(org?.plan)
+    if (!planConfig.features.automatedReminders) {
+      skippedStarterCount++
       continue
     }
 
@@ -42,12 +57,7 @@ export async function GET(request: Request) {
       continue
     }
 
-    const [{ data: org }, { data: client }, { data: items }] = await Promise.all([
-      admin
-        .from('organizations')
-        .select('name')
-        .eq('id', req.organization_id)
-        .single(),
+    const [{ data: client }, { data: items }] = await Promise.all([
       admin
         .from('clients')
         .select('name, email')
@@ -105,5 +115,6 @@ export async function GET(request: Request) {
   return NextResponse.json({
     ok: true,
     chasedCount,
+    skippedStarterCount,
   })
 }
