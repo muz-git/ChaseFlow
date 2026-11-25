@@ -33,7 +33,7 @@ async function Navbar() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
-            <Link href="/dashboard" aria-label="fetchdocs Dashboard">
+            <Link href="/dashboard" aria-label="FetchDocs Dashboard">
               <Logo size="sm" />
             </Link>
             {org && (
@@ -62,6 +62,12 @@ async function Navbar() {
               className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Requests
+            </Link>
+            <Link
+              href="/dashboard/settings"
+              className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+            >
+              Branding
             </Link>
           </nav>
         </div>
@@ -100,6 +106,12 @@ async function Navbar() {
           className="rounded-lg px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
         >
           Requests
+        </Link>
+        <Link
+          href="/dashboard/settings"
+          className="rounded-lg px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+        >
+          Branding
         </Link>
       </nav>
     </header>

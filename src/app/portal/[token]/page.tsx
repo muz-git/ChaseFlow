@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { connection } from 'next/server'
 import { ShieldCheck, Calendar, Lock, AlertCircle, Clock } from 'lucide-react'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getPlanConfig } from '@/lib/plans'
 import { Logo } from '@/components/Logo'
 import { PortalChecklist } from './PortalChecklist'
 
@@ -18,7 +19,7 @@ async function PortalContent({
 
   const admin = createAdminClient()
 
-  // 1. Direct lookup on document_requests (no relational joins)
+  // 1. Direct lookup on document_requests
   const { data: request, error } = await admin
     .from('document_requests')
     .select(
@@ -46,7 +47,7 @@ async function PortalContent({
           </p>
         </div>
         <p className="text-center text-xs text-slate-400">
-          Powered by fetchdocs Secure Document Collection
+          Powered by FetchDocs Secure Document Collection
         </p>
       </div>
     )
@@ -74,17 +75,17 @@ async function PortalContent({
           </p>
         </div>
         <p className="text-center text-xs text-slate-400">
-          Powered by fetchdocs Secure Document Collection
+          Powered by FetchDocs Secure Document Collection
         </p>
       </div>
     )
   }
 
-  // 2. Fetch firm name, client name, and checklist items independently
+  // 2. Fetch firm branding, client name, and checklist items independently
   const [{ data: org }, { data: client }, { data: items }] = await Promise.all([
     admin
       .from('organizations')
-      .select('name')
+      .select('name, plan, logo_url, brand_color')
       .eq('id', request.organization_id)
       .maybeSingle(),
     admin
@@ -98,6 +99,11 @@ async function PortalContent({
       .eq('request_id', request.id)
       .order('created_at', { ascending: true }),
   ])
+
+  const planConfig = getPlanConfig(org?.plan)
+  const useCustomBranding = planConfig.features.customBranding
+  const accentColor = useCustomBranding && org?.brand_color ? org.brand_color : '#059669'
+  const customLogoUrl = useCustomBranding ? org?.logo_url : null
 
   const itemIds = (items ?? []).map((i) => i.id)
   const { data: docs } = itemIds.length
@@ -114,17 +120,42 @@ async function PortalContent({
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-emerald-100 selection:text-emerald-900">
+      <div className="h-1.5 w-full" style={{ backgroundColor: accentColor }} />
       <header className="border-b border-slate-200/90 bg-white">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
-            <Logo size="sm" />
-            <span className="hidden text-slate-300 sm:inline">|</span>
-            <span className="hidden text-xs font-semibold text-slate-600 sm:inline">
-              {org?.name || 'Accounting Practice'}
-            </span>
+            {customLogoUrl ? (
+              <div className="flex items-center gap-3">
+                <img
+                  src={customLogoUrl}
+                  alt={org?.name || 'Accounting Practice'}
+                  className="h-9 max-w-[180px] object-contain"
+                />
+                <span className="hidden text-slate-300 sm:inline">|</span>
+                <span className="hidden text-xs font-semibold text-slate-600 sm:inline">
+                  {org?.name}
+                </span>
+              </div>
+            ) : useCustomBranding && org?.name ? (
+              <span className="text-base font-extrabold tracking-tight text-slate-900">
+                {org.name}
+              </span>
+            ) : (
+              <>
+                <Logo size="sm" />
+                <span className="hidden text-slate-300 sm:inline">|</span>
+                <span className="hidden text-xs font-semibold text-slate-600 sm:inline">
+                  {org?.name || 'Accounting Practice'}
+                </span>
+              </>
+            )}
           </div>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
-            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white"
+            style={{ backgroundColor: accentColor }}
+          >
+            <ShieldCheck className="h-3.5 w-3.5" />
             256-Bit Encrypted Portal
           </span>
         </div>
@@ -133,7 +164,10 @@ async function PortalContent({
       <main className="mx-auto w-full max-w-3xl flex-1 space-y-6 px-4 py-8 sm:px-6 sm:py-10">
         <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700">
+            <span
+              className="text-xs font-bold uppercase tracking-wider"
+              style={{ color: accentColor }}
+            >
               {org?.name || 'Accounting Practice'}
             </span>
             {request.due_date && (
@@ -174,14 +208,14 @@ async function PortalContent({
       <footer className="border-t border-slate-200/70 bg-white py-5">
         <div className="mx-auto flex max-w-3xl flex-col items-center justify-between gap-2 px-4 text-xs text-slate-500 sm:flex-row sm:px-6">
           <span className="inline-flex items-center gap-1.5">
-            <Lock className="h-3.5 w-3.5 text-emerald-600" />
+            <Lock className="h-3.5 w-3.5" style={{ color: accentColor }} />
             Files are encrypted in transit and at rest in UK/EU data centres.
           </span>
           <Link
             href="/"
             className="font-medium text-slate-500 transition hover:text-slate-800"
           >
-            Powered by fetchdocs
+            Powered by FetchDocs
           </Link>
         </div>
       </footer>
