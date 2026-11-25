@@ -1,21 +1,37 @@
 ﻿import Link from 'next/link'
 import { Logo } from '@/components/Logo'
+import { FaqAccordion, HeroProductDemo } from '@/components/LandingInteractive'
 
 const features = [
   {
     title: 'Zero-Password Magic Portals',
     description:
-      'Clients click a secure, encrypted link straight from their inbox - no forgotten passwords, portal registrations, or phone support.',
+      'Clients click a secure, encrypted link straight from their inbox—no forgotten passwords, portal registrations, or phone support.',
   },
   {
     title: 'Automated Weekday Chasing',
     description:
-      'Set a due date once. FetchDocs politely follows up at 9:00 AM on weekdays until every requested bank statement, P60, or receipt is uploaded.',
+      'Set a due date once. FetchDocs politely follows up at 9:00 AM on weekdays until every bank statement, P60, or receipt is uploaded.',
   },
   {
     title: 'Instant Review & Audit Trail',
     description:
       'Preview uploaded PDFs and spreadsheets inside your dashboard, approve or reject files with one click, and keep a timestamped compliance log.',
+  },
+  {
+    title: 'White-Label Firm Branding',
+    description:
+      'Display your accounting practice logo and brand accent colour on every client upload portal so clients trust the link immediately.',
+  },
+  {
+    title: '1-Click ZIP Pack Export',
+    description:
+      'Once a client checklist is complete, bundle every approved PDF, CSV, and receipt into a neatly named ZIP archive ready for your tax software.',
+  },
+  {
+    title: 'UK Self-Assessment & VAT Presets',
+    description:
+      'Launch requests in seconds using ready-made checklists for Sole Traders, Limited Company Year-End, Quarterly VAT, and Payroll.',
   },
 ]
 
@@ -26,11 +42,12 @@ const tiers = [
     period: '/month',
     description: 'Ideal for sole bookkeepers and independent practitioners starting out.',
     highlights: [
-      'Up to 10 active document requests/mo',
-      '10 GB encrypted UK/EU client storage',
-      'No-login magic link client portals',
-      'UK Self-Assessment & VAT templates',
-      'Manual 1-click email nudges',
+      'Up to 10 document requests / month',
+      '10 GB encrypted UK/EU document storage',
+      '1 accountant seat',
+      'Manual 1-click reminder emails',
+      'Standard FetchDocs client portal',
+      'Individual document downloads',
     ],
     cta: 'Start 14-Day Free Trial',
     featured: false,
@@ -41,11 +58,12 @@ const tiers = [
     period: '/month',
     description: 'Built for growing small firms tired of year-end chasing bottlenecks.',
     highlights: [
-      'Up to 50 active document requests/mo',
-      '50 GB encrypted UK/EU client storage',
-      'Automated weekday reminder schedules',
-      'Custom firm logo & portal branding',
-      'Full document review & audit trail',
+      'Up to 50 document requests / month',
+      '50 GB encrypted UK/EU document storage',
+      '1 accountant seat',
+      'Automated weekday client reminder emails',
+      'White-label firm logo & custom brand accent',
+      'Individual document downloads',
     ],
     cta: 'Start 14-Day Free Trial',
     featured: true,
@@ -56,11 +74,12 @@ const tiers = [
     period: '/month',
     description: 'Complete document collection workflow for multi-staff practices.',
     highlights: [
-      'Unlimited active document requests',
-      '250 GB encrypted UK/EU client storage',
-      'Up to 5 staff team logins',
-      '1-click ZIP pack export per client',
-      'Priority email delivery & support',
+      'Unlimited document requests',
+      '250 GB encrypted UK/EU document storage',
+      'Up to 5 team seats',
+      'Automated weekday client reminder emails',
+      'White-label firm logo & custom brand accent',
+      '1-Click ZIP pack export per client request',
     ],
     cta: 'Start 14-Day Free Trial',
     featured: false,
@@ -71,8 +90,8 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-emerald-100 selection:text-emerald-900">
       {/* Top Navigation */}
-      <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+      <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/85 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/" aria-label="FetchDocs Home">
             <Logo size="md" />
           </Link>
@@ -87,6 +106,9 @@ export default function LandingPage() {
             <a href="#pricing" className="transition hover:text-slate-900">
               Pricing
             </a>
+            <a href="#faq" className="transition hover:text-slate-900">
+              FAQ
+            </a>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -100,134 +122,166 @@ export default function LandingPage() {
               href="/signup"
               className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
             >
-              Get Started
+              Start Free Trial
             </Link>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white pt-16 pb-24 sm:pt-24 sm:pb-32">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="relative overflow-hidden border-b border-slate-200/80 bg-white pt-14 pb-24 sm:pt-20 sm:pb-28">
+        {/* Subtle Architectural Grid + Emerald Glow */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#f1f5f9_1px,transparent_1px),linear-gradient(to_bottom,#f1f5f9_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_75%_60%_at_50%_0%,#000_70%,transparent_100%)]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-24 left-1/2 h-80 w-[42rem] -translate-x-1/2 rounded-full bg-emerald-400/15 blur-3xl"
+        />
+
+        <div className="relative mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1.5 text-xs font-semibold text-emerald-800">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200/90 bg-emerald-50/90 px-3.5 py-1.5 text-xs font-semibold text-emerald-800 shadow-xs">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              Built for UK Accountants & Bookkeepers
+              Purpose-Built for UK Accountants & Bookkeepers
             </div>
 
-            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-950 sm:text-6xl sm:leading-[1.1]">
               Stop chasing clients for{' '}
-              <span className="text-emerald-600">missing tax records.</span>
+              <span className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                missing tax records.
+              </span>
             </h1>
 
-            <p className="mt-6 text-lg leading-8 text-slate-600">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600">
               Send branded document checklists in 30 seconds. Clients upload bank statements,
               receipts, and P60s through a password-free magic link while FetchDocs handles the
               follow-up emails automatically.
             </p>
 
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <div className="mt-9 flex flex-col items-center justify-center gap-3.5 sm:flex-row">
               <Link
                 href="/signup"
-                className="w-full rounded-xl bg-emerald-600 px-7 py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-emerald-700 sm:w-auto"
+                className="w-full rounded-xl bg-emerald-600 px-7 py-3.5 text-base font-semibold text-white shadow-md shadow-emerald-600/20 transition hover:bg-emerald-700 sm:w-auto"
               >
                 Start Free 14-Day Trial
               </Link>
-              <Link
-                href="/login"
+              <a
+                href="#pricing"
                 className="w-full rounded-xl border border-slate-300 bg-white px-7 py-3.5 text-base font-semibold text-slate-800 transition hover:bg-slate-50 sm:w-auto"
               >
-                Accountant Sign In →
-              </Link>
+                View Practice Plans →
+              </a>
             </div>
-            <p className="mt-4 text-xs text-slate-500">
-              No credit card required · UK & EU encrypted storage · Setup in under 2 minutes
-            </p>
+
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-medium text-slate-500">
+              <span>✓ 14-day free trial</span>
+              <span>✓ Zero client passwords</span>
+              <span>✓ UK & EU GDPR encrypted storage</span>
+              <span>✓ Cancel anytime</span>
+            </div>
           </div>
 
-          {/* Interactive Product Preview Mockup */}
-          <div className="mx-auto mt-16 max-w-4xl rounded-2xl border border-slate-200 bg-slate-900 p-2 shadow-2xl">
-            <div className="flex items-center gap-2 border-b border-slate-800 px-4 py-2.5">
-              <span className="h-3 w-3 rounded-full bg-rose-500/80" />
-              <span className="h-3 w-3 rounded-full bg-amber-400/80" />
-              <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
-              <span className="ml-3 text-xs font-medium text-slate-400">
-                fetchdocs.co.uk/dashboard/requests/sa-2026
-              </span>
+          {/* Interactive Dual-View Product Demo */}
+          <HeroProductDemo />
+        </div>
+      </section>
+
+      {/* Old Way vs FetchDocs Comparison */}
+      <section className="border-b border-slate-200/80 bg-slate-50 py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
+              Why Practices Switch
+            </p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+              Replace inbox chaos with a structured collection pipeline
+            </h2>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {/* Old Way */}
+            <div className="rounded-2xl border border-slate-200 bg-white p-8">
+              <div className="inline-flex items-center gap-2 rounded-lg bg-rose-50 px-3 py-1 text-xs font-bold text-rose-700">
+                ✕ The Old Way
+              </div>
+              <h3 className="mt-4 text-lg font-bold text-slate-900">
+                Scattered emails, blurry photos & manual chasing
+              </h3>
+              <ul className="mt-5 space-y-3.5 text-sm text-slate-600">
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-rose-500">✕</span>
+                  <span>
+                    Clients ignore clunky client portals because they forgot their password from last
+                    January.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-rose-500">✕</span>
+                  <span>
+                    Attachments arrive across 14 separate reply-all emails, WhatsApp messages, and
+                    unlabelled ZIP files.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-rose-500">✕</span>
+                  <span>
+                    Senior staff waste billable hours every week manually tracking who still owes a
+                    P60 or Q3 bank statement.
+                  </span>
+                </li>
+              </ul>
             </div>
 
-            <div className="rounded-xl bg-white p-6 sm:p-8">
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-emerald-600">
-                    Active Checklist · Auto-Chase Enabled
-                  </p>
-                  <h2 className="mt-1 text-xl font-bold text-slate-900">
-                    2025/26 Self-Assessment Pack - Hartwell Design Ltd
-                  </h2>
-                </div>
-                <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
-                  2 of 3 Documents Received
-                </span>
+            {/* FetchDocs Way */}
+            <div className="rounded-2xl border-2 border-emerald-600/90 bg-slate-900 p-8 text-white shadow-xl">
+              <div className="inline-flex items-center gap-2 rounded-lg bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-300">
+                ✓ With FetchDocs
               </div>
-
-              <div className="mt-5 divide-y divide-slate-100">
-                <div className="flex items-center justify-between py-3.5">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-900">
-                      12 Months Business Bank Statements (PDF/CSV)
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      Uploaded by client · Barclays_2025_26.pdf
-                    </p>
-                  </div>
-                  <span className="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                    Approved
+              <h3 className="mt-4 text-lg font-bold text-white">
+                One magic link, automatic nudges & filing-ready packs
+              </h3>
+              <ul className="mt-5 space-y-3.5 text-sm text-slate-300">
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-emerald-400">✓</span>
+                  <span>
+                    Clients tap one encrypted link on mobile or desktop and upload straight into each
+                    checklist slot.
                   </span>
-                </div>
-
-                <div className="flex items-center justify-between py-3.5">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-900">
-                      P60 End of Year Certificate
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      Uploaded 14 mins ago · Ready for review
-                    </p>
-                  </div>
-                  <span className="rounded-md bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-700">
-                    Review File
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-emerald-400">✓</span>
+                  <span>
+                    FetchDocs automatically sends polite 9:00 AM weekday reminders until every item
+                    is received.
                   </span>
-                </div>
-
-                <div className="flex items-center justify-between py-3.5">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-900">
-                      Dividend Vouchers & Summary
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      Next polite reminder scheduled: Tomorrow 9:00 AM
-                    </p>
-                  </div>
-                  <span className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
-                    Awaiting Client
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="font-bold text-emerald-400">✓</span>
+                  <span>
+                    Approve files as they arrive and export the entire completed client pack in one
+                    click.
                   </span>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="border-b border-slate-200/80 py-20">
+      <section id="how-it-works" className="border-b border-slate-200/80 bg-white py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-              Three steps from request to filing-ready
+            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
+              Simple 3-Step Workflow
+            </p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+              From request to filing-ready in minutes
             </h2>
             <p className="mt-3 text-base text-slate-600">
-              Replace messy email chains and unencrypted attachments with a single structured workflow.
+              Built so every member of your practice can send a request on day one without training.
             </p>
           </div>
 
@@ -235,23 +289,23 @@ export default function LandingPage() {
             {[
               {
                 step: '01',
-                title: 'Create a Checklist',
-                body: 'Select a client, list the exact documents required, and set your deadline.',
+                title: 'Create a Client Checklist',
+                body: 'Pick a client, choose a Self-Assessment, VAT, or custom checklist, and set your target deadline.',
               },
               {
                 step: '02',
                 title: 'Client Uploads via Magic Link',
-                body: 'Your client receives a one-click upload portal that works cleanly on phone or desktop with zero login friction.',
+                body: 'Your client receives a one-click upload portal branded with your firm logo—zero login friction on phone or PC.',
               },
               {
                 step: '03',
                 title: 'Review, Approve & Export',
-                body: 'Inspect files immediately, request replacements if a page is missing, and close the pack.',
+                body: 'Inspect PDFs and CSVs immediately, request a replacement if a page is missing, and download the complete pack.',
               },
             ].map((item) => (
               <div
                 key={item.step}
-                className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm"
+                className="relative rounded-2xl border border-slate-200 bg-slate-50/70 p-7 transition hover:border-emerald-300 hover:bg-white hover:shadow-md"
               >
                 <span className="inline-block rounded-lg bg-slate-900 px-3 py-1 text-xs font-bold text-emerald-400">
                   Step {item.step}
@@ -265,19 +319,22 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section id="features" className="border-b border-slate-200/80 bg-white py-20">
+      <section id="features" className="border-b border-slate-200/80 bg-slate-50 py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-              Designed to eliminate January & quarter-end chaos
+            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
+              Everything You Need
+            </p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+              Designed to eliminate January & quarter-end bottlenecks
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-7"
+                className="rounded-2xl border border-slate-200/90 bg-white p-7 shadow-xs transition hover:border-emerald-300 hover:shadow-md"
               >
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600/10 text-emerald-700">
                   <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -296,15 +353,46 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* UK Compliance & Security Strip */}
+      <section className="border-b border-slate-200/80 bg-white py-12">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 md:flex-row">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
+              Security & UK GDPR First
+            </p>
+            <h3 className="mt-1 text-xl font-bold text-slate-900">
+              Built to protect sensitive client tax & financial records
+            </h3>
+          </div>
+          <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-slate-700 sm:grid-cols-4">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-center">
+              TLS 1.3 & AES-256 Encryption
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-center">
+              UK / EU Data Residency
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-center">
+              Scoped Magic-Link Tokens
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-center">
+              Full Upload Audit Logs
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing */}
-      <section id="pricing" className="py-20">
+      <section id="pricing" className="border-b border-slate-200/80 bg-slate-50 py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-              Simple, transparent practice pricing
+            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
+              Transparent Pricing
+            </p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+              Simple monthly plans that pay for themselves in one saved hour
             </h2>
             <p className="mt-3 text-base text-slate-600">
-              Save hours of admin every week for less than one billable hour per month.
+              Start with a 14-day free trial on any tier. Upgrade, downgrade, or cancel anytime.
             </p>
           </div>
 
@@ -314,7 +402,7 @@ export default function LandingPage() {
                 key={tier.name}
                 className={`flex flex-col justify-between rounded-2xl p-8 ${
                   tier.featured
-                    ? 'border-2 border-emerald-600 bg-slate-900 text-white shadow-xl'
+                    ? 'relative border-2 border-emerald-500 bg-slate-900 text-white shadow-2xl'
                     : 'border border-slate-200 bg-white text-slate-900 shadow-sm'
                 }`}
               >
@@ -344,11 +432,18 @@ export default function LandingPage() {
                       {tier.period}
                     </span>
                   </div>
+                  <p
+                    className={`mt-1 text-xs ${
+                      tier.featured ? 'text-emerald-300/90' : 'text-slate-500'
+                    }`}
+                  >
+                    Includes 14-day free trial · Cancel anytime
+                  </p>
 
-                  <ul className="mt-8 space-y-3 text-sm">
+                  <ul className="mt-7 space-y-3 text-sm">
                     {tier.highlights.map((item) => (
                       <li key={item} className="flex items-start gap-2.5">
-                        <span className="font-bold text-emerald-500">+</span>
+                        <span className="font-bold text-emerald-500">✓</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -357,9 +452,9 @@ export default function LandingPage() {
 
                 <Link
                   href="/signup"
-                  className={`mt-8 block rounded-xl px-5 py-3 text-center text-sm font-semibold transition ${
+                  className={`mt-8 block rounded-xl px-5 py-3.5 text-center text-sm font-semibold transition ${
                     tier.featured
-                      ? 'bg-emerald-500 text-slate-950 hover:bg-emerald-400'
+                      ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20 hover:bg-emerald-400'
                       : 'bg-slate-900 text-white hover:bg-slate-800'
                   }`}
                 >
@@ -371,14 +466,61 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section id="faq" className="bg-white py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">FAQ</p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+              Common questions from UK accounting practices
+            </h2>
+          </div>
+
+          <FaqAccordion />
+        </div>
+      </section>
+
+      {/* Final Conversion CTA Banner */}
+      <section className="px-6 pb-20">
+        <div className="mx-auto max-w-5xl rounded-3xl bg-slate-900 px-8 py-14 text-center text-white shadow-xl sm:px-14">
+          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+            Ready to reclaim hours every week from document chasing?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-slate-300">
+            Create your FetchDocs workspace in under two minutes and send your first client
+            checklist today.
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href="/signup"
+              className="w-full rounded-xl bg-emerald-500 px-7 py-3.5 text-base font-bold text-slate-950 transition hover:bg-emerald-400 sm:w-auto"
+            >
+              Start Your 14-Day Free Trial
+            </Link>
+            <Link
+              href="/login"
+              className="w-full rounded-xl border border-slate-700 bg-slate-800/70 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
+            >
+              Sign In to Dashboard
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-slate-200 bg-white py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
           <Logo size="sm" />
           <p className="text-xs text-slate-500">
-            © 2026 FetchDocs. Secure Client Document Collection for Accounting Practices.
+            © 2026 FetchDocs. Secure Client Document Collection for UK Accounting Practices.
           </p>
           <div className="flex gap-6 text-xs font-medium text-slate-600">
+            <a href="#pricing" className="hover:text-slate-900">
+              Pricing
+            </a>
+            <a href="#faq" className="hover:text-slate-900">
+              FAQ
+            </a>
             <Link href="/login" className="hover:text-slate-900">
               Sign In
             </Link>
